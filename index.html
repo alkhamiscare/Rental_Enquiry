@@ -1,272 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop Rental Enquiry – Al Waseem Building</title>
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al Barkat Complex – Rental Enquiry</title>
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+  margin: 0; padding: 0;
+  display: flex; justify-content: center; align-items: flex-start;
+  min-height: 100vh;
+}
+.container {
+  background: white; width: 92%; max-width: 700px; margin: 30px 0;
+  border-radius: 18px; box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  padding: 30px;
+}
+h1 { text-align: center; color: #1a73e8; margin-bottom: 8px; }
+p.desc { text-align: center; color: #555; margin-bottom: 25px; font-size: 0.95em; }
 
-    .container {
-      background: white;
-      width: 92%;
-      max-width: 700px;
-      margin: 30px 0;
-      border-radius: 18px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      padding: 30px;
-      animation: fadeIn 0.6s ease-in;
-    }
+label { font-weight: 600; display: block; margin-top: 18px; color: #333; }
+input, select, textarea {
+  width: 100%; padding: 14px; border: 1px solid #ccc; border-radius: 10px;
+  margin-top: 6px; font-size: 16px; font-family: inherit; transition: 0.25s ease;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #1a73e8; outline: none; box-shadow: 0 0 8px rgba(26,115,232,0.25);
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.checkbox-group {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px 10px; margin-top: 10px;
+}
+.checkbox-group label {
+  font-weight: 500; display: flex; align-items: center;
+  background: #f9fafc; border-radius: 8px; padding: 8px; transition: 0.25s ease;
+}
+.checkbox-group label:hover { background: #e3f2fd; }
+.checkbox-group input[type="checkbox"], .checkbox-group input[type="radio"] {
+  width: 22px; height: 22px; margin-right: 8px; accent-color: #1a73e8; cursor: pointer;
+}
 
-    h1 {
-      text-align: center;
-      color: #1a73e8;
-      margin-bottom: 8px;
-      font-size: 1.6em;
-    }
+button {
+  width: 100%; background: #1a73e8; color: white; border: none; padding: 15px; margin-top: 30px;
+  font-size: 17px; font-weight: 600; border-radius: 12px; cursor: pointer; transition: 0.3s ease;
+}
+button:hover { background: #0d47a1; transform: scale(1.02); }
 
-    p.desc {
-      text-align: center;
-      color: #555;
-      margin-bottom: 25px;
-      font-size: 0.95em;
-    }
+#otherPurposeBox { display: none; margin-top: 10px; }
 
-    label {
-      font-weight: 600;
-      display: block;
-      margin-top: 18px;
-      color: #333;
-      font-size: 0.95em;
-    }
+#successMsg {
+  display: none;
+  color: green;
+  margin-top: 10px;
+  font-weight: 600;
+  text-align: center;
+}
 
-    input, select, textarea {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      margin-top: 6px;
-      font-size: 16px;
-      font-family: inherit;
-      transition: 0.25s ease;
-    }
+@media (max-width: 480px) {
+  .container { padding: 22px; }
+  button { font-size: 16px; padding: 14px; }
+}
 
-    input:focus, select:focus, textarea:focus {
-      border-color: #1a73e8;
-      outline: none;
-      box-shadow: 0 0 8px rgba(26,115,232,0.25);
-      transform: scale(1.01);
-    }
+/* Banner Slideshow */
+.banner-container { position: relative; max-width: 100%; margin-bottom: 20px; border-radius: 12px; overflow: hidden; }
+.slides { display: none; }
+.slides img { width: 100%; display: block; border-radius: 12px; }
+.prev, .next {
+  cursor: pointer; position: absolute; top: 50%; width: auto; padding: 10px;
+  margin-top: -22px; color: white; font-weight: bold; font-size: 24px;
+  border-radius: 50%; user-select: none; background-color: rgba(0,0,0,0.4); transition: 0.3s;
+}
+.prev:hover, .next:hover { background-color: rgba(0,0,0,0.7); }
+.prev { left: 10px; }
+.next { right: 10px; }
+.fade { animation-name: fade; animation-duration: 1s; }
+@keyframes fade { from {opacity: .4} to {opacity: 1} }
 
-    .checkbox-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 8px 10px;
-      margin-top: 10px;
-    }
-
-    .checkbox-group label {
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      font-size: 0.9em;
-      background: #f9fafc;
-      border-radius: 8px;
-      padding: 8px;
-      transition: 0.25s ease;
-    }
-
-    .checkbox-group label:hover {
-      background: #e3f2fd;
-    }
-
-    .checkbox-group input[type="checkbox"],
-    .checkbox-group input[type="radio"] {
-      width: 22px;
-      height: 22px;
-      margin-right: 8px;
-      accent-color: #1a73e8;
-      cursor: pointer;
-    }
-
-    button {
-      width: 100%;
-      background: #1a73e8;
-      color: white;
-      border: none;
-      padding: 15px;
-      margin-top: 30px;
-      font-size: 17px;
-      font-weight: 600;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-
-    button:hover {
-      background: #0d47a1;
-      transform: scale(1.02);
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 25px;
-      color: #888;
-      font-size: 14px;
-    }
-
-    img.banner {
-      width: 100%;
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
-
-    #otherPurposeBox {
-      display: none;
-      margin-top: 10px;
-    }
-
-    /* Success popup */
-    #successMsg {
-      display: none;
-      background: #e8f5e9;
-      color: #2e7d32;
-      padding: 14px;
-      border-radius: 10px;
-      margin-top: 20px;
-      text-align: center;
-      font-weight: 600;
-      border: 1px solid #c8e6c9;
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 22px;
-      }
-      button {
-        font-size: 16px;
-        padding: 14px;
-      }
-      label, input, textarea, select {
-        font-size: 15px;
-      }
-    }
-  </style>
+footer { text-align: center; margin-top: 25px; color: #888; font-size: 14px; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <img class="banner" src="https://drive.google.com/uc?export=view&id=1yfE62YDhz9H1c_30MZT1pL7WfqR32RdH" alt="Building photo">
+<div class="container">
 
-    <h1>Rental Enquiry Form</h1>
-    <p class="desc">Please fill in your details below. Our leasing team will contact you shortly.</p>
-
-    <form id="rentalForm" action="https://formspree.io/f/yourFormID" method="POST">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="Full Name" placeholder="Enter your full name" required>
-
-      <label for="phone">Mobile Number (Primary Contact)</label>
-      <input type="tel" id="phone" name="Mobile Number" placeholder="+968 9xxxxxxx" required>
-
-      <label for="email">Email Address (Optional)</label>
-      <input type="email" id="email" name="Email Address" placeholder="you@example.com">
-
-      <label>Purpose of Renting</label>
-      <div class="checkbox-group">
-        <label><input type="radio" name="Purpose" value="Retail Shop" required> Retail Shop</label>
-        <label><input type="radio" name="Purpose" value="Office"> Office</label>
-        <label><input type="radio" name="Purpose" value="Café / Restaurant"> Café / Restaurant</label>
-        <label><input type="radio" name="Purpose" value="Storage"> Storage</label>
-        <label><input type="radio" id="otherPurpose" name="Purpose" value="Other"> Other</label>
-      </div>
-      <input type="text" id="otherPurposeBox" name="Other Purpose Details" placeholder="Please specify your purpose">
-
-      <label for="businessName">Business Name (if applicable)</label>
-      <input type="text" id="businessName" name="Business Name" placeholder="e.g. Al Noor Café">
-
-      <label for="businessType">Type of Business / Category</label>
-      <input type="text" id="businessType" name="Type of Business" placeholder="e.g. Restaurant, Salon, Grocery">
-
-      <label for="currentLocation">Current Location of Business</label>
-      <input type="text" id="currentLocation" name="Current Location" placeholder="e.g. Seeb, Muscat">
-
-      <label>Required Facilities</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="Facilities" value="Water Connection"> Water Connection</label>
-        <label><input type="checkbox" name="Facilities" value="3-phase Electricity"> 3-phase Electricity</label>
-        <label><input type="checkbox" name="Facilities" value="Ventilation / Exhaust"> Ventilation / Exhaust</label>
-        <label><input type="checkbox" name="Facilities" value="High Load Capacity"> High Load Capacity</label>
-        <label><input type="checkbox" name="Facilities" value="Parking Requirements"> Parking Requirements</label>
-        <label><input type="checkbox" name="Facilities" value="Storage Room Needed"> Storage Room Needed</label>
-        <label><input type="checkbox" name="Facilities" value="Accessibility Requirements"> Accessibility Requirements</label>
-      </div>
-
-      <label for="comments">Additional Comments</label>
-      <textarea id="comments" name="Additional Comments" rows="4" placeholder="Any specific requirements or preferences..."></textarea>
-
-      <button type="submit">Submit Enquiry</button>
-    </form>
-
-    <div id="successMsg">✅ Thank you! Your enquiry has been submitted successfully.</div>
-
-    <footer>
-      © 2025 Al Waseem Building · Real Estate Enquiry Form
-    </footer>
+  <!-- Banner -->
+  <div class="banner-container">
+    <div class="slides fade">
+      <img src="https://drive.google.com/uc?export=view&id=1yfE62YDhz9H1c_30MZT1pL7WfqR32RdH" alt="Al Barkat Complex Banner">
+    </div>
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
   </div>
 
-  <script>
-    const otherRadio = document.getElementById('otherPurpose');
-    const otherBox = document.getElementById('otherPurposeBox');
-    const radios = document.querySelectorAll('input[name="Purpose"]');
-    const form = document.getElementById('rentalForm');
-    const successMsg = document.getElementById('successMsg');
+  <h1>Al Barkat Complex – Rental Enquiry</h1>
+  <p class="desc">Fill in your details. Our leasing team will contact you shortly.</p>
 
-    radios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (otherRadio.checked) {
-          otherBox.style.display = 'block';
-          otherBox.required = true;
-        } else {
-          otherBox.style.display = 'none';
-          otherBox.value = '';
-          otherBox.required = false;
-        }
-      });
-    });
+  <!-- Form -->
+  <form id="rentalForm" method="POST" action="https://script.google.com/macros/s/AKfycbydq9NwyJgm8DGGz5bhKyEw6MSn5aS8llgMstoPpYAx61YXlZZCG_-EExgMUqQEfMC4/exec" target="hidden_iframe">
 
-    // Handle success without redirect
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-      if (response.ok) {
-        form.reset();
-        successMsg.style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => successMsg.style.display = 'none', 5000);
-      } else {
-        alert('There was an issue sending your form. Please try again.');
-      }
-    });
-  </script>
+    <label>Full Name</label>
+    <input type="text" name="name" placeholder="Enter your full name" required>
+
+    <label>Mobile Number</label>
+    <input type="tel" name="phone" placeholder="+968 9xxxxxxx" required>
+
+    <label>Email Address (Optional)</label>
+    <input type="email" name="email" placeholder="you@example.com">
+
+    <label>Purpose of Renting</label>
+    <div class="checkbox-group">
+      <label><input type="radio" name="purpose" value="Retail Shop" required> Retail Shop</label>
+      <label><input type="radio" name="purpose" value="Office"> Office</label>
+      <label><input type="radio" name="purpose" value="Café / Restaurant"> Café / Restaurant</label>
+      <label><input type="radio" name="purpose" value="Storage"> Storage</label>
+      <label><input type="radio" name="purpose" value="Other" id="otherPurpose"> Other</label>
+    </div>
+    <input type="text" name="otherPurpose" id="otherPurposeBox" placeholder="Please specify your purpose">
+
+    <label>Business Name (if applicable)</label>
+    <input type="text" name="businessName" placeholder="e.g. Al Noor Café">
+
+    <label>Type of Business / Category</label>
+    <input type="text" name="businessType" placeholder="e.g. Restaurant, Salon, Grocery">
+
+    <label>Current Location of Business</label>
+    <input type="text" name="currentLocation" placeholder="e.g. Seeb, Muscat">
+
+    <label>Required Facilities</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="facilities" value="Water Connection"> Water Connection</label>
+      <label><input type="checkbox" name="facilities" value="3-phase Electricity"> 3-phase Electricity</label>
+      <label><input type="checkbox" name="facilities" value="Ventilation / Exhaust"> Ventilation / Exhaust</label>
+      <label><input type="checkbox" name="facilities" value="High Load Capacity"> High Load Capacity</label>
+      <label><input type="checkbox" name="facilities" value="Parking Requirements"> Parking Requirements</label>
+      <label><input type="checkbox" name="facilities" value="Storage Room Needed"> Storage Room Needed</label>
+      <label><input type="checkbox" name="facilities" value="Accessibility Requirements"> Accessibility Requirements</label>
+    </div>
+
+    <label>Additional Comments</label>
+    <textarea name="comments" rows="4" placeholder="Any specific requirements..."></textarea>
+
+    <button type="submit">Submit Enquiry</button>
+  </form>
+
+  <!-- Success Message -->
+  <div id="successMsg">✅ Submitted successfully!</div>
+
+  <!-- Hidden iframe for direct submission -->
+  <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+  <!-- Google Map Embed -->
+  <div style="margin-top:30px;border-radius:12px;overflow:hidden;">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d722.1822401303341!2d58.203667269508415!3d23.6425992272108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjPCsDM4JzMzLjQiTiA1OMKwMTInMTUuNSJF!5e1!3m2!1sen!2som!4v1762840548047!5m2!1sen!2som"
+      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+
+  <footer>
+    © 2025 Al Barkat Complex · Real Estate Enquiry Form
+  </footer>
+</div>
+
+<script>
+// Slideshow
+let slideIndex = 0;
+showSlides();
+function showSlides() {
+  let slides = document.getElementsByClassName("slides");
+  for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
+  slideIndex++;
+  if (slideIndex > slides.length) slideIndex = 1;
+  slides[slideIndex-1].style.display = "block";
+  setTimeout(showSlides, 4000);
+}
+function plusSlides(n) { slideIndex += n-1; showSlides(); }
+
+// "Other" textbox
+const otherRadio = document.getElementById('otherPurpose');
+const otherBox = document.getElementById('otherPurposeBox');
+const radios = document.querySelectorAll('input[name="purpose"]');
+radios.forEach(r => r.addEventListener('change', () => {
+  if (otherRadio.checked) {
+    otherBox.style.display = 'block';
+    otherBox.required = true;
+  } else {
+    otherBox.style.display = 'none';
+    otherBox.value = '';
+    otherBox.required = false;
+  }
+}));
+
+// Show success message and reset form after submit
+const form = document.getElementById('rentalForm');
+const successMsg = document.getElementById('successMsg');
+
+form.onsubmit = function() {
+  // show success message
+  successMsg.style.display = 'block';
+  // reset form
+  setTimeout(() => {
+    form.reset();
+    otherBox.style.display = 'none'; // hide Other textbox after reset
+  }, 10); // tiny delay ensures the form submits first
+};
+</script>
 </body>
 </html>
-
-
